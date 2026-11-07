@@ -386,6 +386,26 @@
     input.addEventListener("input", updateCount);
     $("#form").addEventListener("submit", updateCount);
     updateCount();
+
+    // 예시 문장: examples.json 에서 그린다. 누르면 입력 칸에 넣기만 한다 (분류는 «분류하기»로)
+    loadJSON("examples.json")
+      .then((ex) => {
+        const list = (ex && ex.문장) || [];
+        if (!list.length) return;
+        $("#example-list").replaceChildren(
+          ...list.map((text) => {
+            const b = el("button", { type: "button" }, text);
+            b.addEventListener("click", () => {
+              input.value = text.slice(0, input.maxLength);
+              updateCount();
+              input.focus();
+            });
+            return b;
+          })
+        );
+        $("#examples").hidden = false;
+      })
+      .catch(() => {}); // 예시가 없어도 분류기는 그대로 쓴다
     $("#score-btn").addEventListener("click", scoreRules);
     $("#score-ai-btn").addEventListener("click", scoreAI);
   }

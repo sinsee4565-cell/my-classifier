@@ -109,6 +109,14 @@ textarea::placeholder { color: #a9a3b3; }
 }
 #go:hover { background: var(--accent-dark); }
 #go:disabled { opacity: .5; cursor: default; }
+.examples { margin: 0 2px 14px; }
+.ex-label { display: block; margin-bottom: 8px; font: 600 .75rem/1.4 var(--mono); letter-spacing: .06em; color: var(--muted); }
+.ex-list { display: flex; flex-wrap: wrap; gap: 8px; }
+.ex-list button {
+  padding: 8px 14px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface);
+  color: var(--text); font-size: .875rem; text-align: left; cursor: pointer; transition: border-color .15s, background .15s;
+}
+.ex-list button:hover { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
 .hint { display: flex; align-items: center; gap: 8px; margin: 12px 4px 0; color: var(--muted); font-size: .8125rem; }
 .hint svg { width: 16px; height: 16px; }
 

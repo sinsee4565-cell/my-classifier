@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <!-- 배경 그림: 물류 창고 · 트럭 · 지게차 · 상자 캐릭터 (직접 그린 일러스트) -->
+  <defs>
+    <g id="box">
+      <rect x="0" y="0" width="90" height="70" rx="6" fill="#f3e3c3" stroke="#c9a46a" stroke-width="4"/>
+      <path d="M45 0v26M30 0h30" stroke="#c9a46a" stroke-width="4"/>
+      <rect x="30" y="0" width="30" height="14" fill="#e9cf9c"/>
+    </g>
+  </defs>
+
+  <!-- 위쪽 배송 경로 점선 -->
+  <path d="M60 120 C 300 40, 520 200, 760 110 S 1100 60, 1160 150" stroke="#9ed36a" stroke-width="5" stroke-dasharray="4 18"/>
+  <g transform="translate(1135 95)">
+    <path d="M25 0c-14 0-25 11-25 25 0 19 25 45 25 45s25-26 25-45C50 11 39 0 25 0z" fill="#ff6b6b"/>
+    <circle cx="25" cy="25" r="9" fill="#fff"/>
+  </g>
+  <g transform="translate(40 95)">
+    <circle cx="20" cy="25" r="18" fill="#9ed36a"/>
+    <circle cx="20" cy="25" r="7" fill="#fff"/>
+  </g>
+
+  <!-- 왼쪽 위 창고 선반 -->
+  <g transform="translate(60 210)" stroke="#a7b0b8" stroke-width="6">
+    <path d="M0 0v260M240 0v260M0 80h240M0 170h240M0 255h240"/>
+    <use href="#box" x="15" y="8" stroke="none"/>
+    <use href="#box" x="120" y="8"/>
+    <use href="#box" x="60" y="97"/>
+    <use href="#box" x="20" y="185"/>
+    <use href="#box" x="130" y="185"/>
+  </g>
+
+  <!-- 상자 캐릭터 (오른쪽 위) -->
+  <g transform="translate(900 230)">
+    <path d="M-30 70 q-30 -20 -40 -55" stroke="#c9a46a" stroke-width="8"/>
+    <path d="M190 70 q30 -25 35 -60" stroke="#c9a46a" stroke-width="8"/>
+    <circle cx="-72" cy="10" r="12" fill="#f3e3c3" stroke="#c9a46a" stroke-width="5"/>
+    <circle cx="227" cy="5" r="12" fill="#f3e3c3" stroke="#c9a46a" stroke-width="5"/>
+    <path d="M0 30 L80 0 L160 30 L80 60 Z" fill="#e9cf9c" stroke="#c9a46a" stroke-width="5"/>
+    <path d="M0 30 v120 l80 30 v-120 z" fill="#f3e3c3" stroke="#c9a46a" stroke-width="5"/>
+    <path d="M160 30 v120 l-80 30 v-120 z" fill="#ead2a3" stroke="#c9a46a" stroke-width="5"/>
+    <path d="M40 15 l80 30" stroke="#9ed36a" stroke-width="12"/>
+    <circle cx="28" cy="95" r="7" fill="#4a3b2a"/>
+    <circle cx="60" cy="107" r="7" fill="#4a3b2a"/>
+    <path d="M30 122 q14 16 30 6" stroke="#4a3b2a" stroke-width="5"/>
+    <ellipse cx="18" cy="115" rx="8" ry="5" fill="#ff8f8f"/>
+    <ellipse cx="72" cy="132" rx="8" ry="5" fill="#ff8f8f"/>
+    <path d="M100 80 l40 -14 M100 96 l40 -14" stroke="#c9a46a" stroke-width="4"/>
+  </g>
+
+  <!-- 바닥선 -->
+  <path d="M0 800 H1200" stroke="#d5dbe0" stroke-width="5"/>
+
+  <!-- 트럭 (왼쪽 아래) -->
+  <g transform="translate(70 600)">
+    <rect x="0" y="0" width="300" height="160" rx="12" fill="#ffffff" stroke="#a7b0b8" stroke-width="6"/>
+    <path d="M0 110 H300" stroke="#ff6b6b" stroke-width="14"/>
+    <path d="M30 60 h120" stroke="#9ed36a" stroke-width="14"/>
+    <path d="M300 50 h70 l50 55 v55 h-120 z" fill="#9ed36a" stroke="#6fae3a" stroke-width="6"/>
+    <path d="M318 65 h45 l32 36 h-77 z" fill="#ffffff" stroke="#6fae3a" stroke-width="5"/>
+    <circle cx="75" cy="175" r="28" fill="#5b6570"/><circle cx="75" cy="175" r="11" fill="#d5dbe0"/>
+    <circle cx="225" cy="175" r="28" fill="#5b6570"/><circle cx="225" cy="175" r="11" fill="#d5dbe0"/>
+    <circle cx="370" cy="175" r="28" fill="#5b6570"/><circle cx="370" cy="175" r="11" fill="#d5dbe0"/>
+    <path d="M-40 40 h-50 M-30 75 h-70 M-45 110 h-40" stroke="#c4ccd2" stroke-width="6"/>
+  </g>
+
+  <!-- 지게차 (가운데 아래) -->
+  <g transform="translate(560 610)">
+    <path d="M150 -10 v190" stroke="#5b6570" stroke-width="10"/>
+    <path d="M150 160 h90" stroke="#5b6570" stroke-width="10"/>
+    <rect x="160" y="100" width="80" height="10" fill="#c9a46a"/>
+    <use href="#box" x="155" y="30"/>
+    <path d="M20 40 h80 l30 60 v60 h-130 v-60 z" fill="#ff6b6b" stroke="#d94a4a" stroke-width="6"/>
+    <path d="M30 40 v-50 h70 l10 50" stroke="#5b6570" stroke-width="7"/>
+    <circle cx="35" cy="170" r="24" fill="#5b6570"/><circle cx="35" cy="170" r="9" fill="#d5dbe0"/>
+    <circle cx="115" cy="172" r="20" fill="#5b6570"/><circle cx="115" cy="172" r="8" fill="#d5dbe0"/>
+  </g>
+
+  <!-- 쌓인 상자 (오른쪽 아래) -->
+  <g transform="translate(900 560)">
+    <rect x="-10" y="225" width="240" height="18" fill="#c9a46a"/>
+    <use href="#box" x="0" y="155"/>
+    <use href="#box" x="100" y="155"/>
+    <use href="#box" x="50" y="85"/>
+    <use href="#box" x="150" y="85" transform="rotate(4 195 120)"/>
+    <use href="#box" x="80" y="15"/>
+  </g>
+
+  <!-- 클립보드 (가운데 위쪽) -->
+  <g transform="translate(560 300) rotate(-8)">
+    <rect x="0" y="0" width="110" height="140" rx="10" fill="#ffffff" stroke="#a7b0b8" stroke-width="5"/>
+    <rect x="35" y="-12" width="40" height="22" rx="6" fill="#9ed36a"/>
+    <path d="M20 40 l8 8 14 -16 M52 42 h38 M20 75 l8 8 14 -16 M52 77 h38 M20 110 h70" stroke="#6fae3a" stroke-width="5"/>
+    <path d="M52 110 h38" stroke="#ff6b6b" stroke-width="5"/>
+  </g>
+</svg>

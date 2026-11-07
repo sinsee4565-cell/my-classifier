@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>사내 물류 업무 요청 분류기</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="mask.js" defer></script>
+  <script src="rules.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <main class="wrap">
+    <header>
+      <h1>사내 물류 업무 요청 분류기<span class="dot">.</span></h1>
+      <p class="muted">문장 한 줄을 넣으면 칸 · 긴급도 · 이유를 알려 줍니다. AI(Gemini)가 가르고, AI가 안 될 때는 낱말 규칙으로 가릅니다.</p>
+    </header>
+
+    <p id="load-error" class="error" hidden></p>
+
+    <div class="tabs" role="tablist">
+      <button role="tab" id="tab-classify" aria-controls="panel-classify" aria-selected="true">분류</button>
+      <button role="tab" id="tab-score" aria-controls="panel-score" aria-selected="false">채점</button>
+    </div>
+
+    <section id="panel-classify" role="tabpanel" aria-labelledby="tab-classify">
+      <form id="form" class="row">
+        <label for="input" class="sr-only">요청 문장</label>
+        <input id="input" type="text" autocomplete="off" placeholder="요청 문장 한 줄을 넣으세요">
+        <button id="go" type="submit" disabled>분류</button>
+      </form>
+      <p class="muted small">이름 · 전화번호 · 사번은 가린 뒤 판정합니다. 넣은 문장은 저장하지 않습니다.</p>
+
+      <div id="result" class="card" hidden>
+        <p id="r-notice" class="notice" hidden><b>AI 없이 규칙으로 갈랐습니다</b> <span id="r-notice-why" class="small"></span></p>
+        <div class="kv"><span class="k">가린 문장</span><span id="r-masked" class="v"></span></div>
+        <div class="kv"><span class="k">칸</span><span id="r-cat" class="v badge"></span></div>
+        <div class="kv"><span class="k">긴급도</span><span id="r-urg" class="v badge urg"></span></div>
+        <div class="kv"><span class="k">이유</span><span id="r-reason" class="v"></span></div>
+        <div class="kv"><span class="k">판정</span><span id="r-source" class="v muted small"></span></div>
+      </div>
+
+      <details class="criteria">
+        <summary>기준 보기</summary>
+        <h3>칸</h3>
+        <ul id="criteria-list"></ul>
+        <p id="criteria-rule" class="small"></p>
+        <h3>긴급도</h3>
+        <ul id="urgency-list"></ul>
+        <p id="criteria-owner" class="muted small"></p>
+      </details>
+    </section>
+
+    <section id="panel-score" role="tabpanel" aria-labelledby="tab-score" hidden>
+      <p class="muted">정답 30문장(data/answer.json)을 판정해 맞은 수를 셉니다. AI 채점은 가린 문장을 10개씩 세 번 보냅니다.</p>
+      <div class="btn-row">
+        <button id="score-btn" type="button" disabled>규칙으로 채점</button>
+        <button id="score-ai-btn" type="button" disabled>AI로 채점</button>
+      </div>
+      <div id="score-out"></div>
+    </section>
+  </main>
+</body>
+</html>

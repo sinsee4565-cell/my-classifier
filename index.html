@@ -3,62 +3,140 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>사내 물류 업무 요청 분류기</title>
+  <title>물류 요청 분류기</title>
   <link rel="stylesheet" href="style.css">
   <script src="mask.js" defer></script>
   <script src="rules.js" defer></script>
   <script src="app.js" defer></script>
 </head>
 <body>
-  <main class="wrap">
-    <header>
-      <h1>사내 물류 업무 요청 분류기</h1>
-      <p class="muted">문장 한 줄을 넣으면 칸 · 긴급도 · 이유를 알려 줍니다. AI(Gemini)가 가르고, AI가 안 될 때는 낱말 규칙으로 가릅니다.</p>
-    </header>
-
-    <p id="load-error" class="error" hidden></p>
-
-    <div class="tabs" role="tablist">
-      <button role="tab" id="tab-classify" aria-controls="panel-classify" aria-selected="true">분류</button>
-      <button role="tab" id="tab-score" aria-controls="panel-score" aria-selected="false">채점</button>
+  <div class="page">
+    <div class="topbar">
+      <div class="brand">
+        <span class="logo" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M12 3 3 7.5l9 4.5 9-4.5L12 3Z"/><path d="m3 12 9 4.5 9-4.5"/><path d="m3 16.5 9 4.5 9-4.5"/></svg>
+        </span>
+        <b>물류팀</b><span class="slash">/</span><span class="sub">업무 요청</span>
+      </div>
+      <span class="pill"><i class="dot-ic" aria-hidden="true"></i>내부 도구</span>
     </div>
 
-    <section id="panel-classify" role="tabpanel" aria-labelledby="tab-classify">
-      <form id="form" class="row">
-        <label for="input" class="sr-only">요청 문장</label>
-        <input id="input" type="text" autocomplete="off" placeholder="요청 문장 한 줄을 넣으세요">
-        <button id="go" type="submit" disabled>분류</button>
-      </form>
-      <p class="muted small">이름 · 전화번호 · 사번은 가린 뒤 판정합니다. 넣은 문장은 저장하지 않습니다.</p>
+    <main class="wrap">
+      <header class="hero">
+        <p class="eyebrow">
+          <span class="ic-box" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M3 7h11v9H3z"/><path d="M14 10h4l3 3v3h-7"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg>
+          </span>
+          물류 운영 · 요청 분류
+        </p>
+        <h1>물류 요청 분류기</h1>
+        <p class="lead">문장 한 줄을 넣으면 칸 · 긴급도 · 이유를 알려 줍니다. AI(Gemini)가 가르고, AI가 안 될 때는 낱말 규칙으로 가릅니다.</p>
+      </header>
 
-      <div id="result" class="card" hidden>
-        <p id="r-notice" class="notice" hidden><b>AI 없이 규칙으로 갈랐습니다</b> <span id="r-notice-why" class="small"></span></p>
-        <div class="kv"><span class="k">가린 문장</span><span id="r-masked" class="v"></span></div>
-        <div class="kv"><span class="k">칸</span><span id="r-cat" class="v badge"></span></div>
-        <div class="kv"><span class="k">긴급도</span><span id="r-urg" class="v badge urg"></span></div>
-        <div class="kv"><span class="k">이유</span><span id="r-reason" class="v"></span></div>
-        <div class="kv"><span class="k">판정</span><span id="r-source" class="v muted small"></span></div>
+      <p id="load-error" class="error" hidden></p>
+
+      <div class="tabs" role="tablist">
+        <button role="tab" id="tab-classify" aria-controls="panel-classify" aria-selected="true">분류</button>
+        <button role="tab" id="tab-score" aria-controls="panel-score" aria-selected="false">채점</button>
       </div>
 
-      <details class="criteria">
-        <summary>기준 보기</summary>
-        <h3>칸</h3>
-        <ul id="criteria-list"></ul>
-        <p id="criteria-rule" class="small"></p>
-        <h3>긴급도</h3>
-        <ul id="urgency-list"></ul>
-        <p id="criteria-owner" class="muted small"></p>
-      </details>
-    </section>
+      <section id="panel-classify" role="tabpanel" aria-labelledby="tab-classify">
+        <div class="sec-head">
+          <div>
+            <p class="kicker">01 / REQUEST</p>
+            <h2>어떤 요청인가요?</h2>
+          </div>
+          <span class="private"><i class="dot-ic" aria-hidden="true"></i>저장 안 함</span>
+        </div>
 
-    <section id="panel-score" role="tabpanel" aria-labelledby="tab-score" hidden>
-      <p class="muted">정답 30문장(data/answer.json)을 판정해 맞은 수를 셉니다. AI 채점은 가린 문장을 10개씩 세 번 보냅니다.</p>
-      <div class="btn-row">
-        <button id="score-btn" type="button" disabled>규칙으로 채점</button>
-        <button id="score-ai-btn" type="button" disabled>AI로 채점</button>
-      </div>
-      <div id="score-out"></div>
-    </section>
-  </main>
+        <form id="form" class="composer">
+          <label for="input" class="sr-only">요청 문장</label>
+          <textarea id="input" rows="3" maxlength="300" autocomplete="off" placeholder="요청 문장 한 줄을 넣으세요"></textarea>
+          <div class="composer-foot">
+            <span id="count" class="count">0 / 300</span>
+            <button id="go" type="submit" disabled>분류하기 <span aria-hidden="true">→</span></button>
+          </div>
+        </form>
+        <p class="hint">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6v.4"/><path d="M12 17h.01"/></svg>
+          이름 · 전화번호 · 사번은 가린 뒤 판정합니다. 넣은 문장은 저장하지 않습니다.
+        </p>
+
+        <div id="result" class="card" hidden>
+          <div class="card-head">
+            <span class="ic-box lg" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1"/><path d="m9 13 2 2 4-4"/></svg>
+            </span>
+            <div>
+              <p class="kicker">02 / ROUTING</p>
+              <h2>분류 결과</h2>
+            </div>
+          </div>
+
+          <p id="r-notice" class="notice" hidden><b>AI 없이 규칙으로 갈랐습니다</b> <span id="r-notice-why" class="small"></span></p>
+
+          <div class="block">
+            <p class="label">가린 문장</p>
+            <p id="r-masked" class="quote"></p>
+          </div>
+
+          <div class="split">
+            <div class="block">
+              <p class="label">분류 칸</p>
+              <p class="value cat">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4 7v10l8 4 8-4V7l-8-4Z"/><path d="m4 7 8 4 8-4"/><path d="M12 11v10"/></svg>
+                <span id="r-cat"></span>
+              </p>
+            </div>
+            <div class="block">
+              <p class="label">긴급도</p>
+              <p id="r-urg-wrap" class="value urg">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 3 5 14h6l-1 7 8-11h-6l1-7Z"/></svg>
+                <span id="r-urg"></span>
+              </p>
+            </div>
+          </div>
+
+          <div class="block">
+            <p class="label">판정 이유</p>
+            <p id="r-reason" class="reason"></p>
+          </div>
+
+          <div class="card-foot">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            <span>판정: <span id="r-source"></span></span>
+          </div>
+        </div>
+
+        <details class="criteria">
+          <summary>
+            <span class="chev" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m6 15 6-6 6 6"/></svg></span>
+            분류 기준 보기
+            <span id="criteria-count" class="summary-meta"></span>
+          </summary>
+          <ol id="criteria-list" class="crit-rows"></ol>
+          <p id="criteria-rule" class="crit-note"></p>
+          <p class="crit-title">긴급도</p>
+          <ol id="urgency-list" class="crit-rows"></ol>
+          <p id="criteria-owner" class="crit-note muted"></p>
+        </details>
+      </section>
+
+      <section id="panel-score" role="tabpanel" aria-labelledby="tab-score" hidden>
+        <div class="sec-head">
+          <div>
+            <p class="kicker">03 / SCORE</p>
+            <h2>정답과 견주기</h2>
+          </div>
+        </div>
+        <p class="lead small">정답 30문장(data/answer.json)을 판정해 맞은 수를 셉니다. AI 채점은 가린 문장을 10개씩 세 번 보냅니다.</p>
+        <div class="btn-row">
+          <button id="score-btn" type="button" disabled>규칙으로 채점</button>
+          <button id="score-ai-btn" type="button" disabled>AI로 채점</button>
+        </div>
+        <div id="score-out"></div>
+      </section>
+    </main>
+  </div>
 </body>
 </html>

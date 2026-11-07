@@ -80,12 +80,13 @@
     $("#criteria-list").replaceChildren(
       ...c.순서.map((name) => {
         const def = (c.칸.find((k) => k.이름 === name) || {}).정의 || "";
-        return el("li", {}, [el("b", {}, name), " ", el("span", { class: "muted" }, def)]);
+        return el("li", {}, [el("b", {}, name), el("span", { class: "def" }, def)]);
       })
     );
+    $("#criteria-count").textContent = c.순서.length + "개 칸";
     $("#criteria-rule").textContent = c.순서_규칙 + " (" + c.순서.join(" → ") + ")";
     $("#urgency-list").replaceChildren(
-      ...c.긴급도.map((u) => el("li", {}, [el("b", {}, u.이름), " ", el("span", { class: "muted" }, u.정의)]))
+      ...c.긴급도.map((u) => el("li", {}, [el("b", {}, u.이름), el("span", { class: "def" }, u.정의)]))
     );
     $("#criteria-owner").textContent = c.owner + " · version " + c.version;
   }
@@ -106,7 +107,7 @@
     $("#r-masked").textContent = masked;
     $("#r-cat").textContent = "…";
     $("#r-urg").textContent = "…";
-    $("#r-urg").dataset.level = "";
+    $("#r-urg-wrap").dataset.level = "";
     $("#r-reason").textContent = "";
     $("#r-source").textContent = "AI가 가르는 중…";
     $("#r-notice").hidden = true;
@@ -131,7 +132,7 @@
     }
     $("#r-cat").textContent = r.칸;
     $("#r-urg").textContent = r.긴급도;
-    $("#r-urg").dataset.level = String(state.criteria.긴급도.findIndex((u) => u.이름 === r.긴급도));
+    $("#r-urg-wrap").dataset.level = String(state.criteria.긴급도.findIndex((u) => u.이름 === r.긴급도));
     $("#r-reason").textContent = r.이유;
     $("#r-source").textContent = source;
   }
@@ -373,6 +374,18 @@
       ev.preventDefault();
       classifyOne();
     });
+    // 문장 한 줄: Enter 는 분류, Shift+Enter 는 줄바꿈. 글자 수 표시
+    const input = $("#input");
+    input.addEventListener("keydown", (ev) => {
+      if (ev.key === "Enter" && !ev.shiftKey && !ev.isComposing) {
+        ev.preventDefault();
+        if (!$("#go").disabled) $("#form").requestSubmit();
+      }
+    });
+    const updateCount = () => ($("#count").textContent = input.value.length + " / " + input.maxLength);
+    input.addEventListener("input", updateCount);
+    $("#form").addEventListener("submit", updateCount);
+    updateCount();
     $("#score-btn").addEventListener("click", scoreRules);
     $("#score-ai-btn").addEventListener("click", scoreAI);
   }
